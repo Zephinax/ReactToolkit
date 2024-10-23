@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
@@ -12,22 +12,12 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
   redirectPath = '/',
 }) => {
   const { isAuthenticated } = useAuth();
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // Simulate a check for loading purposes
-    const checkAuth = async () => {
-      // Your logic to check auth status
-      setLoading(false);
-    };
-    checkAuth();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>; // Loading state
-  }
-
-  return isAuthenticated ? <>{children}</> : <Navigate to={redirectPath} />;
+  return isAuthenticated ? (
+    <>{children}</>
+  ) : (
+    <Navigate to={redirectPath} replace />
+  );
 };
 
 export default PrivateRoute;
