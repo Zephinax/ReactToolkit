@@ -14,14 +14,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return (
-      Cookies.get('busnetStoreAccessToken') !== undefined ||
+      Cookies.get('AccessToken') !== undefined ||
       localStorage.getItem('isAuthenticated') === 'true'
     );
   });
 
   const login = (token: string, rememberMe: boolean) => {
     setIsAuthenticated(true);
-    Cookies.set('busnetStoreAccessToken', token, {
+    Cookies.set('AccessToken', token, {
       expires: rememberMe ? 7 : undefined,
     });
     if (rememberMe) {
@@ -36,7 +36,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setIsAuthenticated(false);
     localStorage.removeItem('isAuthenticated');
     sessionStorage.removeItem('isAuthenticated');
-    Cookies.remove('busnetStoreAccessToken');
+    Cookies.remove('AccessToken');
   };
 
   return (
